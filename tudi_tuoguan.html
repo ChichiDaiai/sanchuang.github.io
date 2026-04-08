@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>土地托管服务</title>
+    <style>
+        /* --- 1. 基础全局设置 --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Microsoft YaHei', Arial, sans-serif; overflow-x: hidden; }
+        
+        .background {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('images/images2.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            z-index: -1;
+        }
+
+        /* --- 2. 顶部导航栏（核心修复悬停问题） --- */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            background-color: rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 100;
+            padding: 30px 0; 
+        }
+
+        .nav-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 20px;
+            padding: 0 30px;
+        }
+
+        .nav-item {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 19px;
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+        .nav-item:hover { color: #2c7d38; }
+
+        /* 【关键修复】建立感应桥梁 */
+        .nav-item-container { 
+            position: relative; 
+            padding: 0 10px 40px 10px; /* 增加底部填充，确保鼠标移向菜单时不会离开容器 */
+            margin-bottom: -40px;      /* 抵消填充，不影响导航栏高度 */
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 60px; /* 调整位置，使其紧贴感应区 */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 255, 255, 0.98);
+            border-radius: 12px;
+            padding: 10px 0;
+            min-width: 200px;
+            display: none; /* 默认隐藏 */
+            list-style: none;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* 只有当鼠标在 container 上时才显示 */
+        .nav-item-container:hover .dropdown-menu { 
+            display: block; 
+        }
+
+        .dropdown-item {
+            padding: 12px 20px; color: #333; text-decoration: none;
+            display: block; font-size: 16px; text-align: center;
+        }
+        .dropdown-item:hover { background-color: #f0f7f1; color: #2c7d38; }
+
+        /* --- 3. Logo 区域 --- */
+        .header-mini {
+            position: fixed; 
+            top: 15px;      
+            left: 200px; /* 与主页 Logo 位置对齐 */
+            z-index: 110;   /* 确保在 navbar 之上 */
+            display: flex;
+            align-items: center; 
+            gap: 12px;      
+            cursor: pointer;
+        }
+
+        .logo-mini {
+            width: 65px;    
+            height: 65px;
+            background-image: url('logo.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .logo-text-mini {
+            color: #2c7d38;
+            font-size: 32px; 
+            font-weight: 700;
+            letter-spacing: 2px;
+            line-height: 1;
+        }
+
+        /* --- 4. 异形大框布局 --- */
+        .main-content {
+            margin-top: 160px;
+            padding-bottom: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page-title {
+            color: #fff; font-size: 42px; text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            margin-bottom: 40px; border-bottom: 4px solid #2c7d38; padding-bottom: 10px;
+        }
+
+        .giant-box {
+            width: min(1400px, 96vw);
+            background-color: rgba(255, 255, 255, 0.92);
+            /* 异形圆角：右上角向外大幅度延展 */
+            border-radius: 40px 240px 40px 40px; 
+            box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column; /* 改为上下结构，方便展示宽幅图片矩阵 */
+            padding: 60px;
+            min-height: 650px;
+        }
+
+        /* 顶部标题区 */
+        .top-intro-side {
+            margin-bottom: 40px;
+            border-left: 8px solid #2c7d38;
+            padding-left: 25px;
+        }
+
+        .top-intro-side h2 {
+            font-size: 42px;
+            color: #2c7d38;
+            margin-bottom: 10px;
+        }
+
+        .top-intro-side p {
+            font-size: 22px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        /* 【核心修改】横向 4 图片矩阵区 */
+        .bottom-grid-side {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4列排列 */
+            gap: 20px;
+            width: 100%;
+        }
+
+        .grid-item {
+            position: relative; /* 必须设为相对定位，方便小标题绝对定位其上 */
+            height: 380px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+        .grid-item:hover { transform: translateY(-10px); }
+
+        .grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 【核心修改】标题覆盖在图片上层，位于下方 */
+        .detail-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(transparent, rgba(44, 125, 56, 0.95)); /* 渐变背景更高级 */
+            color: white;
+            padding: 30px 15px 15px 15px; /* 增加顶部间距方便文字看清 */
+            font-size: 20px;
+            font-weight: 600;
+            text-align: center;
+            z-index: 2;
+        }
+
+        /* 分隔符样式 */
+        .nav-divider { color: rgba(255,255,255,0.4); }
+
+        /* 响应式 */
+        @media (max-width: 1200px) {
+            .bottom-grid-side { grid-template-columns: repeat(2, 1fr); }
+            .giant-box { padding: 40px; }
+        }
+        @media (max-width: 768px) {
+            .bottom-grid-side { grid-template-columns: 1fr; }
+            .header-mini { left: 20px; }
+            .nav-container { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+
+    <!-- Logo -->
+    <header class="header-mini" onclick="location.href='web3.html'">
+        <div class="logo-mini"></div>
+        <div class="logo-text-mini">PLANTER</div>
+    </header>
+
+    <!-- 导航栏（补全版并修复悬停） -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-item">首页</a>
+            <span class="nav-divider">|</span>
+            <a class="nav-item">关于Planter</a>
+            <span class="nav-divider">|</span>
+            
+            <div class="nav-item-container">
+                <a class="nav-item" style="color: #2c7d38;">服务</a>
+                <ul class="dropdown-menu">
+                    <li><a href="tudi_tuoguan.html" class="dropdown-item">土地托管服务</a></li>
+                    <li><a href="pingtai_qudong.html" class="dropdown-item">平台驱动种植服务</a></li>
+                </ul>
+            </div>
+            
+            <span class="nav-divider">|</span>
+            <a class="nav-item">加入我们</a>
+            <span class="nav-divider">|</span>
+            <a class="nav-item">联系我们</a>
+            <span class="nav-divider">|</span>
+            <a class="nav-item">免费注册</a>
+            <span class="nav-divider">|</span>
+            <a class="nav-item">📱 手机版</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <h1 class="page-title">土地托管服务</h1>
+
+        <!-- 异形大框 -->
+        <div class="giant-box">
+            <!-- 上部分：标题与介绍 -->
+            <div class="top-intro-side">
+                <h2>提供规范、专业的土地托管服务</h2>
+                <p>我们为农户提供规范、专业的土地托管服务，从科学种植、田间管理到机械作业、丰产增收，保险配备的全程一站式托管，让农户轻松种地、安心获益。同时创新搭建多元化、灵活共赢的利润分享机制，以透明合理的收益分配模式，充分保障农户的合法权益，携手农户共筑丰收愿景，助力乡村产业高质量发展。</p>
+            </div>
+
+            <!-- 下部分：4 图片横向矩阵 -->
+            <div class="bottom-grid-side">
+                <!-- 项 1 -->
+                <div class="grid-item">
+                    <img src="images/hezuo.jpg" alt="签订托管合同">
+                    <div class="detail-label">签订托管合同</div>
+                </div>
+                <!-- 项 2 -->
+                <div class="grid-item">
+                    <img src="images/baoxian.png" alt="购买农业保险">
+                    <div class="detail-label">购买农业保险</div>
+                </div>
+                <!-- 项 3 -->
+                <div class="grid-item">
+                    <img src="images/zhihuihua.png" alt="利用自营平台种植">
+                    <div class="detail-label">利用自营平台种植</div>
+                </div>
+                <!-- 项 4 -->
+                <div class="grid-item">
+                    <img src="images/lirun_fenpei.png" alt="利润分配">
+                    <div class="detail-label">利润分配</div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

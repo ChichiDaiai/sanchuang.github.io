@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planter农业科技有限责任公司</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        p {
+    text-indent: 2em;
+}
+
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* 背景图设置 */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('images/images2.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            z-index: -1;
+        }
+
+        /* ========== Logo 区域（透明版） ========== */
+        .header {
+            position: absolute;
+            top: 3px;
+            left: 200px;
+            width: auto;
+            height: auto;
+            background-color: transparent;
+            border-radius: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: none;
+            z-index: 10;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background-image: url('logo.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+        }
+
+        .logo-text {
+            color: #2c7d38;
+            font-size: 100px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 公司名称 */
+        .company-name {
+            position: absolute;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 255, 255, 0.0);
+            border-radius: 10px;
+            padding: 8px 16px;
+            color: #ffffff;
+            font-size: 80px;
+            font-weight: 800;
+            line-height: 1.1;
+            white-space: nowrap;
+            width: min(85vw, 900px);
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+            text-align: center;
+            z-index: 8;
+        }
+
+
+        /* ========== 顶部导航栏（透明版） ========== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: transparent;
+            box-shadow: none;
+            z-index: 100;
+            padding: 30px 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 20px;
+            padding: 0 30px;
+        }
+
+        .nav-item {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            color: #2c7d38;
+        }
+
+        .nav-icon {
+            font-size: 16px;
+        }
+
+        .nav-divider {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 16px;
+        }
+
+        /* 响应式导航栏 */
+        @media (max-width: 768px) {
+            .nav-container {
+                gap: 12px;
+                padding: 0 16px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            .nav-item {
+                font-size: 12px;
+            }
+            .nav-divider {
+                display: none;
+            }
+            .company-name {
+                font-size: 40px;
+                top: 100px;
+                white-space: normal;
+                line-height: 1.2;
+            }
+            .header {
+                top: 8px;
+                left: 15px;
+            }
+            .logo {
+                width: 35px;
+                height: 35px;
+            }
+            .logo-text {
+                font-size: 12px;
+            }
+        }
+        /* Logo 信息区域 */
+.logo-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.logo-text {
+    color: #2c7d38;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.logo-sub {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 10px;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+/* 左侧标语 */
+.left-slogan {
+    position: absolute;
+    top: 50%;
+    left: 60px;
+    transform: translateY(-50%);
+    z-index: 8;
+    text-align: left;
+}
+
+.slogan-main {
+    color: #ffffff;
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+    line-height: 1.2;
+}
+
+.slogan-sub {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 60px;
+    font-weight: 500;
+    margin-top: 12px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    letter-spacing: 2px;
+}
+/* --- 新增：技术与服务下拉菜单样式 --- */
+.nav-item-container { 
+    position: relative; 
+    /* 在“服务”文字下方垫一块 35px 高的透明区域，作为鼠标滑向菜单的“桥梁” */
+    padding-bottom: 35px; 
+    margin-bottom: -35px; 
+    display: flex;
+    align-items: center;
+}
+/* 下拉列表样式 */
+.dropdown-menu {
+    position: absolute;
+    /* 菜单位置向上提，确保它紧贴着感应区 */
+    top: 50px; 
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 255, 255, 0.98);
+    border-radius: 12px;
+    padding: 10px 0;
+    min-width: 200px;
+    display: none; /* 初始隐藏 */
+    list-style: none;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    z-index: 1000;
+}
+
+/* 绘制一个小三角形箭头 */
+.dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid rgba(255, 255, 255, 0.95);
+}
+
+/* 鼠标悬停在容器上时显示菜单 */
+.nav-item-container:hover .dropdown-menu { 
+    display: block; 
+}
+
+
+.dropdown-item {
+    padding: 12px 20px;
+    color: #333;
+    text-decoration: none;
+    display: block;
+    font-size: 16px;
+    text-align: center;
+    transition: background 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: #f0f7f1;
+    color: #2c7d38;
+}
+/* 下拉动画 */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -10px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+    /* 导航栏调整 - 手机端 */
+    .navbar {
+        padding: 8px 0;
+    }
+    
+    .nav-container {
+        gap: 8px;
+        padding: 0 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .nav-item {
+        font-size: 11px;
+    }
+    
+    .nav-divider {
+        display: none;  /* 手机端隐藏分隔符，节省空间 */
+    }
+    
+    /* Logo 区域调整 - 手机端 */
+    .header {
+        position: absolute;
+        top: 45px;           /* 往下移动，避开导航栏 */
+        left: 15px;
+        gap: 6px;
+    }
+    
+    .logo {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .logo-text {
+        font-size: 12px;
+    }
+    
+    /* 左侧标语调整 */
+    .left-slogan {
+        left: 15px;
+        top: 40%;
+    }
+    
+    .slogan-main {
+        font-size: 24px;
+    }
+    
+    .slogan-sub {
+        font-size: 12px;
+        margin-top: 8px;
+    }
+    
+    /* 公司名称调整 */
+    .company-name {
+        font-size: 32px;
+        top: 85px;
+        white-space: normal;
+        line-height: 1.2;
+        width: 90vw;
+    }
+    
+    /* 两个大卡片调整 */
+    .center-panel {
+        top: 200px;
+    }
+    
+    .big-card {
+        min-height: 150px;
+        padding: 16px;
+    }
+    
+    .big-card h3 {
+        font-size: 20px;
+    }
+    
+    .big-card p {
+        font-size: 14px;
+    }
+}
+
+        /* ========== 模态框样式 ========== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-card {
+            background-color: rgba(255, 255, 255, 0.98);
+            border-radius: 24px;
+            width: min(700px, 85vw);
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 32px 28px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease forwards;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #2c7d38;
+            padding-bottom: 16px;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h3 {
+            color: #2c7d38;
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 32px;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.2s ease;
+            line-height: 1;
+            padding: 0 8px;
+        }
+
+        .modal-close:hover {
+            color: #d32f2f;
+        }
+
+        .modal-body {
+            color: #333;
+            font-size: 16px;
+            line-height: 1.7;
+            text-align: justify;
+        }
+
+        .modal-body p {
+            margin-bottom: 16px;
+        }
+
+        /* 功能列表样式（两个大卡片容器） */
+        .cards-container {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .modal-card::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .modal-card::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .modal-card::-webkit-scrollbar-thumb {
+            background: #2c7d38;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景图片 -->
+    <div class="background"></div>
+
+    <!-- 顶部导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a class="nav-item" id="nav-home">首页</a>
+            <span class="nav-divider">|</span>
+            <a class="nav-item" id="nav-aboutPlanter">关于Planter</a>
+            <span class="nav-divider">|</span>
+            <div class="nav-item-container">
+    <a class="nav-item" id="nav-tech">服务</a>
+    <ul class="dropdown-menu">
+        <li><a href="tudi_tuoguan.html" class="dropdown-item">土地托管服务</a></li>
+        <li><a href="pingtai_qudong.html" class="dropdown-item">平台驱动种植服务</a></li>
+    </ul>
+</div>
+            <span class="nav-divider">|</span>
+            <a class="nav-item" id="nav-join">加入我们</a>
+            <span class="nav-divider">|</span>
+            <a class="nav-item" id="nav-contact">联系我们</a>
+            <span class="nav-divider">|</span>
+            <a class="nav-item" id="nav-register">免费注册</a>
+            <span class="nav-divider">|</span>
+            <a class="nav-item" id="nav-mobile">
+                <span class="nav-icon">📱</span>
+                <span>手机版</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Logo 区域 -->
+    <header class="header">
+    <div class="logo"></div>
+    <div class="logo-info">
+        <div class="logo-text">PLANTER</div>
+    </div>
+</header>
+
+<!-- 左侧标语 -->
+<div class="left-slogan">
+    <div class="slogan-main">PLANTER</div>
+    <div class="slogan-sub">科技兴农，服务为本</div>
+</div>
+
+
+    <!-- 模态框组件 -->
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="modalTitle">标题</h3>
+                <button class="modal-close" id="closeModalBtn">&times;</button>
+            </div>
+            <div class="modal-body" id="modalContent">
+                <p>内容加载中...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // 左侧大卡片的详细内容
+    const landDetail = `本公司为农户提供规范、专业的土地托管服务，农户基于自愿原则，将土地托管给本公司，与本公司签订合同约定包括土地信息、托管费用(每亩价格，托管亩数)、托管时间、种植种类、规定亩产量、超出亩产量分配方式、未达到亩产量的赔付方式等核心内容，保障双方权益。
+
+达成托管协议后，公司将按规定的种类，利用自营的农业全链条服务智慧平台进行种植，确保种植利益最大化。并为托管土地购买农业保险，确保因特大洪涝、干旱、地震等不可抗力导致减产时能够得到赔付，保证农户和公司的利益。
+
+在公司成立初期，由于公司规模较小，实力有限，本公司采取聚焦策略。仅在河北省廊坊市开展此服务，专注于玉米、小麦的两大主要粮食作物的种植托管。每亩土地每季的托管费用为700元，保证亩产量达到450公斤，若实际亩产超出规定产量，超出部分的收益将由农户与我司按照5:5的比例共享收益。若未达到规定的亩产量，其差额部分将按当地市场价进行全额赔付，确保农户基础收益。
+
+随着公司运营体系的成熟以及实力的不断增强，本公司将逐渐把土地托管服务向河北省内其他地区乃至全国进行推广。同时，我们将继续丰富托管作物的种类，不断满足农户的多元化需求。`;
+
+    // 五个功能的详细内容
+    const functionsData = [
+        {
+            title: "土地超市",
+            detail: "本版块提供闲置耕地资源流转服务，农户可将闲置土地上架到土地超市，发布农田的基本信息以及期望租金等，土地的需求方根据自身需求挑选合适的土地资源，双方达成合作意向后，平台客服将引导辅助双方签订合同，进行相关部门备案等。通过此板块进一步盘活闲置的耕地资源，促进农户增收，也大大降低了企业的交易成本。同时，对于农户和村集体来说，土地的连片规划不仅盘活了集体资产，更提高了土地的价值。"
+        },
+        {
+            title: "农资直购",
+            detail: "本版块提供农资产品销售服务。平台邀请农资销售商家入驻平台，上架售卖种子、农药、化肥等农资产品，扩大农资经销商售卖渠道，同时满足农户对农资产品多样化的需求。消费者可直接访问平台的农资购板块挑选并下单农资产品，解决农资产品种类单一和购买渠道有限的问题。"
+        },
+        {
+            title: "农机云享",
+            detail: "本板块提供农机共享服务。邀请农机供应商及拥有者在本版块发布农机基本信息及共享价格，农户可浏览板块信息选择所需农机进行租赁。服务结束后农户可对农机进行评价，为其他农户提供农机选择的建议，平台强制下架好评率低于90%的农机，确保本平台始终为农户提供优质的农机使用服务。"
+        },
+        {
+            title: "农品集销",
+            detail: "本板块提供农产品集中销售服务。争取农产品加工商、商超、社区团购等农产品收购者入驻平台，在种植前农户可根据产品收购商发布的信息，提前签订种植协议规定农产品种类和收购价格。在收获后，农户可在本板块发布售卖信息，吸引农产品收购者大批采买，降低销售压力。此外，公司与专业的农业保险机构合作，为农户提供农业保险服务，使农户在遭受自然灾害或病虫害时能够获得经济补偿，保障其基本收入，增强其抗风险能力。"
+        },
+        {
+            title: "农技讲堂",
+            detail: "本板块提供农业知识传播服务，分为农业知识、植保动态、种植方案、农业专家四部分。在农业知识部分，打造\"PLANTER\"农业知识IP，在平台发布体系农业知识科普，并将科普同步在抖音、快手等流量平台发布；在植保动态部分，定期发布最新的病虫害防治信息、植保技术动态、农药使用规范等内容，帮助农民了解最前沿的种植信息；在种植方案部分，农户可将土地信息、种植偏好等上传至平台，利用大数据+人工智能自动生成种植方案供农户参考。同时，平台会依据当前种植进程，发布相应的种植知识、防治技巧和种植方案等信息，供农户参考；在农业专家部分，平台邀请专家及种地能手在农闲时开启系列直播科普讲座，定期发布经典、高产案例供农户参考、学习，并在评论区解答农民疑问，为农户排忧解难。"
+        }
+    ];
+
+    // 公司简介内容
+    const companyIntro = `Planter农资有限责任公司是一家专注于农业土地托管服务的现代化农业科技企业。
+
+公司致力于为农户提供规范、专业的土地托管服务，通过自营的农业全链条服务智慧平台，实现种植利益最大化。
+
+公司愿景：成为国内领先的农业综合服务提供商，助力乡村振兴，推动农业现代化发展。
+
+核心价值观：诚信为本，科技兴农，服务至上，合作共赢。`;
+
+    // 获取元素
+    const modalOverlay = document.getElementById('detailModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalContent = document.getElementById('modalContent');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+
+    // 历史记录栈（用于返回上一级）
+    let historyStack = [];
+
+    // 打开模态框函数（修复版）
+    function openModal(title, contentHtml, pushToHistory = true, clearHistory = false) {
+        // 如果是全新的打开（比如点击导航栏），清空历史栈
+        if (clearHistory) {
+            historyStack = [];
+        }
+        
+        if (pushToHistory && modalOverlay.classList.contains('active')) {
+            // 只有当模态框已打开时才保存当前状态到历史栈
+            historyStack.push({
+                title: modalTitle.textContent,
+                content: modalContent.innerHTML
+            });
+        }
+        
+        modalTitle.textContent = title;
+        modalContent.innerHTML = contentHtml;
+        modalOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // 每次打开新内容后，重新绑定事件
+        bindCardEvents();
+        bindFunctionItemEvents();
+    }
+
+    // 绑定两个大卡片的事件
+    function bindCardEvents() {
+        const landCardModal = document.getElementById('landCard');
+        const platformCardModal = document.getElementById('platformCard');
+        
+        if (landCardModal) {
+            // 移除原有事件避免重复绑定
+            const newLandCard = landCardModal.cloneNode(true);
+            landCardModal.parentNode.replaceChild(newLandCard, landCardModal);
+            newLandCard.addEventListener('click', function() {
+                const formattedContent = textToParagraphs(landDetail);
+                openModal('土地托管服务', formattedContent);
+            });
+        }
+        
+        if (platformCardModal) {
+            const newPlatformCard = platformCardModal.cloneNode(true);
+            platformCardModal.parentNode.replaceChild(newPlatformCard, platformCardModal);
+            newPlatformCard.addEventListener('click', function() {
+                const functionsList = generateFunctionsList();
+                openModal('平台核心功能', functionsList);
+            });
+        }
+    }
+
+    // 绑定功能项的事件
+    function bindFunctionItemEvents() {
+        const functionItems = document.querySelectorAll('.function-item');
+        functionItems.forEach(item => {
+            // 移除原有事件避免重复绑定
+            const newItem = item.cloneNode(true);
+            item.parentNode.replaceChild(newItem, item);
+            newItem.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const title = this.getAttribute('data-title');
+                const detail = this.getAttribute('data-detail');
+                if (detail) {
+                    const formattedDetail = textToParagraphs(detail);
+                    openModal(title, formattedDetail);
+                }
+            });
+        });
+    }
+
+    // 返回上一级
+    function goBack() {
+        if (historyStack.length > 0) {
+            const previous = historyStack.pop();
+            modalTitle.textContent = previous.title;
+            modalContent.innerHTML = previous.content;
+            // 返回后重新绑定事件
+            bindCardEvents();
+            bindFunctionItemEvents();
+        } else {
+            // 没有历史记录了，关闭模态框
+            closeModal();
+        }
+    }
+
+    // 关闭模态框（清空历史）
+    function closeModal() {
+        modalOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+        historyStack = [];  // 清空历史记录
+    }
+
+    // 将纯文本转换为段落HTML
+    function textToParagraphs(text) {
+        const paragraphs = text.split(/\n\s*\n/);
+        if (paragraphs.length === 1) {
+            return `<p>${text}</p>`;
+        }
+        return paragraphs.map(para => `<p>${para.trim()}</p>`).join('');
+    }
+
+    // 生成两个大卡片的HTML
+    function generateCardsHTML() {
+        return `
+            <div class="cards-container" style="display: flex; flex-direction: column; gap: 24px;">
+                <div class="big-card" id="landCard" style="background-color: rgba(255, 255, 255, 0.92); border-radius: 16px; padding: 20px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); cursor: pointer; transition: transform 0.3s ease; text-align: center;">
+                    <h3 style="color: #2c7d38; font-size: 28px; margin: 0;">土地托管服务</h3>
+                    <p style="color: #444; margin: 16px 0 0 0;"></p>
+                </div>
+                <div class="big-card" id="platformCard" style="background-color: rgba(255, 255, 255, 0.92); border-radius: 16px; padding: 20px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); cursor: pointer; transition: transform 0.3s ease; text-align: center;">
+                    <h3 style="color: #2c7d38; font-size: 28px; margin: 0;">平台驱动种植服务</h3>
+                    <p style="color: #444; margin: 16px 0 0 0;"></p>
+                </div>
+            </div>
+        `;
+    }
+
+    // 生成功能列表HTML（用于右侧大卡片）
+    function generateFunctionsList() {
+        let html = '<div class="function-list" style="display: flex; flex-direction: column; gap: 16px;">';
+        functionsData.forEach(func => {
+            html += `
+                <div class="function-item" data-title="${func.title}" data-detail="${func.detail.replace(/"/g, '&quot;')}" style="background-color: #f8fdf4; border-left: 4px solid #2c7d38; border-radius: 10px; padding: 16px 20px; cursor: pointer; transition: all 0.2s ease;">
+                    <h4 style="color: #2c7d38; font-size: 20px; margin: 0 0 8px 0;">${func.title}</h4>
+                    <p style="color: #555; font-size: 14px; margin: 0;"></p>
+                </div>
+            `;
+        });
+        html += '</div>';
+        return html;
+    }
+
+    // 显示技术与服务（两个大卡片）- 清空历史
+    function showTechService() {
+        const cardsHTML = generateCardsHTML();
+        openModal('技术与服务', cardsHTML, false, true);  // 不清空历史
+    }
+    
+    // 导航栏点击事件
+    document.getElementById('nav-home').addEventListener('click', () => alert('首页功能开发中，敬请期待！'));
+    
+    // 关于Planter - 显示公司简介（清空历史）
+    document.getElementById('nav-aboutPlanter').addEventListener('click', function() {
+        const formattedIntro = textToParagraphs(companyIntro);
+        openModal('关于 Planter', formattedIntro, true, true);
+    });
+    
+    document.getElementById('nav-join').addEventListener('click', () => alert('加入我们功能开发中，敬请期待！'));
+    document.getElementById('nav-contact').addEventListener('click', () => alert('联系我们功能开发中，敬请期待！'));
+    document.getElementById('nav-register').addEventListener('click', () => alert('免费注册功能开发中，敬请期待！'));
+    document.getElementById('nav-mobile').addEventListener('click', () => alert('手机版功能开发中，敬请期待！'));
+
+    // 关闭按钮事件 - 返回上一级或关闭
+    closeModalBtn.addEventListener('click', function() {
+        if (historyStack.length > 0) {
+            goBack();
+        } else {
+            closeModal();
+        }
+    });
+    
+    // 点击遮罩层 - 返回上一级或关闭
+    modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) {
+            if (historyStack.length > 0) {
+                goBack();
+            } else {
+                closeModal();
+            }
+        }
+    });
+    
+    // ESC键 - 返回上一级或关闭
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+            if (historyStack.length > 0) {
+                goBack();
+            } else {
+                closeModal();
+            }
+        }
+    });
+    </script>
+</body>
+</html>
