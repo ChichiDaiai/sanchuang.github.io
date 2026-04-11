@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>平台驱动种植服务</title>
     <style>
-        /* --- 1. 基础全局设置 --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Microsoft YaHei', Arial, sans-serif; overflow-x: hidden; }
         
-        /* 背景图保持一致 */
         .background {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -20,19 +18,19 @@
             z-index: -1;
         }
 
-        /* --- 2. 顶部导航栏（模糊玻璃效果） --- */
+        /* 导航栏 - 与 tudi 完全一致 */
         .navbar {
             position: fixed;
             top: 0; left: 0; width: 100%;
-            background-color: rgba(255, 255, 255, 0.1); 
+            background-color: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             z-index: 100;
-            padding: 30px 0; 
+            padding: 30px 0;
         }
 
         .nav-container {
-            max-width: 1300px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             justify-content: flex-end;
@@ -42,77 +40,68 @@
         }
 
         .nav-item {
-            color: #ffffff;
             text-decoration: none;
-            font-size: 19px;
+            font-size: 20px;
             font-weight: 500;
             transition: color 0.3s;
             cursor: pointer;
-        }
-        .nav-item:hover { color: #2c7d38; }
-
-        /* --- 3. Logo 区域（协调后的图标与文字） --- */
-        .header-mini {
-            position: fixed; 
-            top: 15px;      
-            left: 200px; /* 与主页 Logo 位置对齐 */
-            z-index: 110;   /* 确保在 navbar 之上 */
             display: flex;
-            align-items: center; 
-            gap: 12px;      
-            cursor: pointer;
-        }
-
-        .logo-mini {
-            width: 65px;    
-            height: 65px;
-            background-image: url('logo.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-        }
-
-        .logo-text-mini {
-            color: #2c7d38;
-            font-size: 32px; 
-            font-weight: 700;
-            letter-spacing: 2px;
+            align-items: center;
             line-height: 1;
         }
 
-        /* --- 4. 服务下拉菜单样式 --- */
-        .nav-item-container { 
-    position: relative; 
-    padding-bottom: 15px; /* 关键：向下延伸感应区，桥接文字与菜单之间的空隙 */
-    margin-bottom: -15px; /* 抵消掉 padding 带来的布局位移 */
-}
-        .dropdown-menu {
-    position: absolute;
-    top: 100%; /* 紧贴容器底部 */
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(255, 255, 255, 0.98); /* 稍微提高不透明度，更易读 */
-    border-radius: 12px;
-    padding: 8px 0;
-    min-width: 200px;
-    display: none;
-    list-style: none;
-    margin-top: 5px; /* 视觉上的微小间距，但因为父容器有 padding，感应不会断 */
-    box-shadow: 0 10px 40px rgba(0,0,0,0.25);
-    border: 1px solid rgba(0,0,0,0.05);
-}
-        .dropdown-menu::before {
-    content: "";
-    position: absolute;
-    top: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 8px solid rgba(255, 255, 255, 0.98);
-}
+        .nav-item:link,
+        .nav-item:visited {
+            color: #000000;
+        }
 
-        .nav-item-container:hover .dropdown-menu { display: block; }
+        .nav-item:hover {
+            color: #2c7d38;
+        }
+
+        .nav-item-container .nav-item:link,
+        .nav-item-container .nav-item:visited {
+            color: #2c7d38;
+        }
+
+        .nav-item-container {
+            position: relative;
+            padding-bottom: 35px;
+            margin-bottom: -35px;
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 255, 255, 0.98);
+            border-radius: 12px;
+            padding: 8px 0;
+            min-width: 200px;
+            display: none;
+            list-style: none;
+            margin-top: 5px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .dropdown-menu::before {
+            content: "";
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgba(255, 255, 255, 0.98);
+        }
+
+        .nav-item-container:hover .dropdown-menu {
+            display: block;
+        }
 
         .dropdown-item {
             padding: 12px 20px;
@@ -121,19 +110,56 @@
             display: block;
             font-size: 16px;
             text-align: center;
-            transition: all 0.2s;
         }
 
-        .dropdown-item:hover { background-color: #f0f7f1; color: #2c7d38; }
+        .dropdown-item:hover {
+            background-color: #f0f7f1;
+            color: #2c7d38;
+        }
 
-        /* --- 5. 页面主体布局 --- */
+        /* Logo 区域 - 与 tudi 完全一致 */
+        .header-mini {
+            position: fixed;
+            top: 15px;
+            left: 200px;
+            z-index: 110;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .logo-mini {
+            width: 50px;
+            height: 50px;
+            background-image: url('logo.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .logo-text-mini {
+            color: #2c7d38;
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .nav-divider {
+            color: #000000;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* 主体内容 */
         .main-content {
-            margin-top: 160px; /* 避开固定的 Banner */
+            margin-top: 160px;
             padding-bottom: 60px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 50px; /* 卡片间距 */
+            gap: 50px;
         }
 
         .page-title {
@@ -146,73 +172,122 @@
             text-align: center;
         }
 
-        /* 大卡片通用样式 */
         .service-card {
             width: min(1100px, 92vw);
-            height: 420px; 
+            height: 420px;
             background-color: rgba(255, 255, 255, 0.92);
             border-radius: 24px;
             overflow: hidden;
-            display: flex; 
+            display: flex;
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
             transition: transform 0.3s ease;
         }
 
-        .service-card:hover { transform: translateY(-8px); }
-
-        /* 卡片图片 */
-        .card-image { flex: 1; overflow: hidden; }
-        .card-image img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* 卡片文字 */
-        .card-text { 
-            flex: 1.2; 
-            padding: 50px; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
+        .service-card:hover {
+            transform: translateY(-8px);
         }
 
-        .card-text h3 { color: #2c7d38; font-size: 30px; margin-bottom: 20px; }
-        .card-text p { 
-            color: #333; 
-            font-size: 18px; 
-            line-height: 1.8; 
-            text-align: justify; 
-            text-indent: 2em; 
+        .card-image {
+            flex: 1;
+            overflow: hidden;
         }
 
-        /* --- 6. 响应式适配 --- */
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-text {
+            flex: 1.2;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .card-text h3 {
+            color: #2c7d38;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        .card-text p {
+            color: #333;
+            font-size: 18px;
+            line-height: 1.8;
+            text-align: justify;
+            text-indent: 2em;
+        }
+
+        /* 响应式 - 与 tudi 一致 */
+        @media (max-width: 1200px) {
+            .service-card {
+                height: auto;
+                flex-direction: column;
+            }
+            .card-image {
+                height: 280px;
+            }
+            .card-text {
+                padding: 30px;
+            }
+        }
+
         @media (max-width: 768px) {
-            .header-mini { left: 20px; top: 10px; }
-            .logo-mini { width: 45px; height: 45px; }
-            .logo-text-mini { font-size: 20px; }
-            .nav-container { display: none; }
-            .main-content { margin-top: 100px; }
-            .service-card { flex-direction: column !important; height: auto; }
-            .card-image { height: 250px; }
-            .page-title { font-size: 28px; }
+            .header-mini {
+                left: 20px;
+                top: 15px;
+            }
+            .logo-mini {
+                width: 40px;
+                height: 40px;
+            }
+            .logo-text-mini {
+                font-size: 20px;
+            }
+            .nav-container {
+                display: none;
+            }
+            .main-content {
+                margin-top: 100px;
+            }
+            .service-card {
+                flex-direction: column !important;
+                height: auto;
+            }
+            .card-image {
+                height: 220px;
+            }
+            .page-title {
+                font-size: 28px;
+            }
+            .card-text h3 {
+                font-size: 24px;
+            }
+            .card-text p {
+                font-size: 15px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="background"></div>
 
-    <!-- 左上角 Logo 区域 -->
-    <header class="header-mini" onclick="location.href='web3.html'">
+    <!-- Logo -->
+    <header class="header-mini" onclick="location.href='index.html'">
         <div class="logo-mini"></div>
         <div class="logo-text-mini">PLANTER</div>
     </header>
 
-    <!-- 顶部导航栏 -->
+    <!-- 导航栏 -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-item">首页</a>
-            <span style="color:rgba(255,255,255,0.4)">|</span>
-            <a class="nav-item">关于Planter</a>
-            <span style="color:rgba(255,255,255,0.4)">|</span>
+            <span class="nav-divider">|</span>
+            <a class="nav-item" href="guanyu.html">关于Planter</a>
+            <span class="nav-divider">|</span>
             
-            <!-- 服务下拉列表 -->
             <div class="nav-item-container">
                 <a class="nav-item" style="color: #2c7d38;">服务</a>
                 <ul class="dropdown-menu">
@@ -221,17 +296,14 @@
                 </ul>
             </div>
             
-            <span style="color:rgba(255,255,255,0.4)">|</span>
+            <span class="nav-divider">|</span>
             <a class="nav-item">加入我们</a>
-            <span style="color:rgba(255,255,255,0.4)">|</span>
-            <!-- 补全缺失项 -->
+            <span class="nav-divider">|</span>
             <a class="nav-item">联系我们</a>
-            <span style="color:rgba(255,255,255,0.4)">|</span>
+            <span class="nav-divider">|</span>
             <a class="nav-item">免费注册</a>
-            <span style="color:rgba(255,255,255,0.4)">|</span>
-            <a class="nav-item">
-                <span style="font-size: 16px; margin-right: 4px;">📱</span>手机版
-            </a>
+            <span class="nav-divider">|</span>
+            <a class="nav-item">📱 手机版</a>
         </div>
     </nav>
 
@@ -239,7 +311,6 @@
     <main class="main-content">
         <h1 class="page-title">平台驱动种植服务</h1>
 
-        <!-- 第一块：服务模式（图左文右） -->
         <div class="service-card">
             <div class="card-image">
                 <img src="images/tudi_chaoshi.jpg" alt="土地超市">
@@ -250,7 +321,6 @@
             </div>
         </div>
 
-        <!-- 第二块：技术支撑（图右文左 - style="flex-direction: row-reverse;"） -->
         <div class="service-card" style="flex-direction: row-reverse;">
             <div class="card-image">
                 <img src="images/nongzi1.png" alt="农资直购">
@@ -261,7 +331,6 @@
             </div>
         </div>
 
-        <!-- 第三块：初期聚焦（图左文右） -->
         <div class="service-card">
             <div class="card-image">
                 <img src="images/nongji.jpg" alt="农机云享">
@@ -272,7 +341,6 @@
             </div>
         </div>
 
-        <!-- 第四块：未来愿景（图右文左 - style="flex-direction: row-reverse;"） -->
         <div class="service-card" style="flex-direction: row-reverse;">
             <div class="card-image">
                 <img src="images/xiaoshou.png" alt="农品集销">
@@ -289,7 +357,7 @@
             </div>
             <div class="card-text">
                 <h3>农技讲堂</h3>
-                <p>本板块提供农业知识传播服务，分为农业知识、植保动态、种植方案、农业专家四部分。在农业知识部分，打造“PLANTER”农业知识IP，在平台发布体系农业知识科普;在植保动态部分，定期发布最新的病虫害防治信息、植保技术动态、农药使用规范等内容;在种植方案部分，根据农户需要，利用大数据+人工智能自动生成种植方案。在农业专家部分，平台邀请专家及种地能手在农闲时开启系列直播科普讲座，定期发布经典、高产案例供农户参考、学习，并在评论区解答农民疑问，为农户排忧解难。</p>
+                <p>本板块提供农业知识传播服务，分为农业知识、植保动态、种植方案、农业专家四部分。在农业知识部分，打造"PLANTER"农业知识IP，在平台发布体系农业知识科普;在植保动态部分，定期发布最新的病虫害防治信息、植保技术动态、农药使用规范等内容;在种植方案部分，根据农户需要，利用大数据+人工智能自动生成种植方案。在农业专家部分，平台邀请专家及种地能手在农闲时开启系列直播科普讲座，定期发布经典、高产案例供农户参考、学习，并在评论区解答农民疑问，为农户排忧解难。</p>
             </div>
         </div>
     </main>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>土地托管服务</title>
+    <title>关于Planter</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Microsoft YaHei', Arial, sans-serif; overflow-x: hidden; }
@@ -18,6 +18,7 @@
             z-index: -1;
         }
 
+        /* 导航栏 - 与 tudi 一致 */
         .navbar {
             position: fixed;
             top: 0; left: 0; width: 100%;
@@ -116,6 +117,7 @@
             color: #2c7d38;
         }
 
+        /* Logo 区域 - 与 tudi 一致 */
         .header-mini {
             position: fixed;
             top: 15px;
@@ -150,7 +152,35 @@
             align-items: center;
         }
 
+        /* 主体内容 */
         .main-content {
+            position: relative;
+            background-image: url('images/shouye_jieshao.jpg');
+            background-size: cover;
+            background-position: center;
+            margin-top: 100px;
+            padding-bottom: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 底部渐变 */
+        .main-content::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.9));
+            pointer-events: none;
+        }
+
+        .second-content {
+            background-image: url('images/kejixingnong (2).png');
+            background-size: cover;
+            background-position: center;
             margin-top: 160px;
             padding-bottom: 80px;
             display: flex;
@@ -162,16 +192,39 @@
             color: #fff;
             font-size: 42px;
             text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            margin-top: 160px;
             margin-bottom: 40px;
             border-bottom: 4px solid #2c7d38;
             padding-bottom: 10px;
+            text-align: center;
+        }
+
+        .page-title_2 {
+            color: #ffffff;
+            font-size: 42px;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            margin-top: 0px;
+            margin-bottom: 40px;
+            border-bottom: 4px solid #2c7d38;
+            padding-bottom: 10px;
+            text-align: center;
         }
 
         .giant-box {
             width: min(1400px, 96vw);
-            background-color: rgba(255, 255, 255, 0.92);
-            border-radius: 40px 240px 40px 40px;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 40px;
+            display: flex;
+            flex-direction: column;
+            padding: 60px;
+            min-height: auto;
+        }
+
+        .second-box {
+            width: min(1400px, 96vw);
+            background-color: transparent;
+            border-radius: 40px;
             display: flex;
             flex-direction: column;
             padding: 60px;
@@ -179,72 +232,39 @@
         }
 
         .top-intro-side {
+            margin-top: 70px;
             margin-bottom: 40px;
-            border-left: 8px solid #2c7d38;
             padding-left: 25px;
         }
 
-        .top-intro-side h2 {
-            font-size: 42px;
-            color: #2c7d38;
-            margin-bottom: 10px;
-        }
-
         .top-intro-side p {
-            font-size: 22px;
-            color: #555;
+            font-size: 25px;
+            text-align: center;
+            color: #ffffff;
             font-weight: 500;
             text-indent: 2em;
             line-height: 1.6;
         }
 
-        .bottom-grid-side {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            width: 100%;
+        .mid-intro-side {
+            margin-bottom: 40px;
+            padding-left: 25px;
         }
 
-        .grid-item {
-            position: relative;
-            height: 380px;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-            transition: transform 0.3s ease;
-        }
-
-        .grid-item:hover {
-            transform: translateY(-10px);
-        }
-
-        .grid-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .detail-label {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: linear-gradient(transparent, rgba(44, 125, 56, 0.95));
-            color: white;
-            padding: 30px 15px 15px 15px;
-            font-size: 20px;
-            font-weight: 600;
+        .mid-intro-side p {
+            font-size: 25px;
             text-align: center;
-            z-index: 2;
+            color: #ffffff;
+            font-weight: 500;
         }
 
-        /* 响应式 */
+        /* 响应式 - 与 tudi 一致 */
         @media (max-width: 1200px) {
-            .bottom-grid-side {
-                grid-template-columns: repeat(2, 1fr);
-            }
             .giant-box {
                 padding: 40px;
+            }
+            .top-intro-side p {
+                font-size: 20px;
             }
         }
 
@@ -263,16 +283,14 @@
             .nav-container {
                 display: none;
             }
-            .bottom-grid-side {
-                grid-template-columns: 1fr;
-            }
             .main-content {
-                margin-top: 100px;
+                margin-top: 80px;
             }
             .page-title {
                 font-size: 28px;
+                margin-top: 100px;
             }
-            .top-intro-side h2 {
+            .page-title_2 {
                 font-size: 28px;
             }
             .top-intro-side p {
@@ -280,9 +298,6 @@
             }
             .giant-box {
                 padding: 20px;
-            }
-            .grid-item {
-                height: 280px;
             }
         }
     </style>
@@ -301,11 +316,11 @@
         <div class="nav-container">
             <a href="index.html" class="nav-item">首页</a>
             <span class="nav-divider">|</span>
-            <a class="nav-item" href="guanyu.html">关于Planter</a>
+            <a href="guanyu.html" class="nav-item" style="color: #2c7d38;">关于Planter</a>
             <span class="nav-divider">|</span>
             
             <div class="nav-item-container">
-                <a class="nav-item" style="color: #2c7d38;">服务</a>
+                <a class="nav-item">服务</a>
                 <ul class="dropdown-menu">
                     <li><a href="tudi_tuoguan.html" class="dropdown-item">土地托管服务</a></li>
                     <li><a href="pingtai_qudong.html" class="dropdown-item">平台驱动种植服务</a></li>
@@ -324,31 +339,22 @@
     </nav>
 
     <main class="main-content">
-        <h1 class="page-title">土地托管服务</h1>
-
+        <h1 class="page-title">关于PLANTER</h1>
         <div class="giant-box">
             <div class="top-intro-side">
-                <h2>提供规范、专业的土地托管服务</h2>
-                <p>我们为农户提供规范、专业的土地托管服务，从科学种植、田间管理到机械作业、丰产增收，保险配备的全程一站式托管，让农户轻松种地、安心获益。同时创新搭建多元化、灵活共赢的利润分享机制，以透明合理的收益分配模式，充分保障农户的合法权益，携手农户共筑丰收愿景，助力乡村产业高质量发展。</p>
+                <p>Planter农业科技有限责任公司是一家专注于农业土地托管服务的现代化农业科技企业。<br>
+                公司致力于为农户提供规范、专业的土地托管服务，通过自营的农业全链条服务智慧平台，实现种植利益最大化。<br>
+                公司愿景：成为国内领先的农业综合服务提供商，助力乡村振兴，推动农业现代化发展。<br>
+                核心价值观：诚信为本，科技兴农，服务至上，合作共赢。</p>
             </div>
+        </div>
+    </main>
 
-            <div class="bottom-grid-side">
-                <div class="grid-item">
-                    <img src="images/hezuo.jpg" alt="签订托管合同">
-                    <div class="detail-label">签订托管合同</div>
-                </div>
-                <div class="grid-item">
-                    <img src="images/baoxian.png" alt="购买农业保险">
-                    <div class="detail-label">购买农业保险</div>
-                </div>
-                <div class="grid-item">
-                    <img src="images/zhihuihua.png" alt="利用自营平台种植">
-                    <div class="detail-label">利用自营平台种植</div>
-                </div>
-                <div class="grid-item">
-                    <img src="images/lirun_fenpei.png" alt="利润分配">
-                    <div class="detail-label">利润分配</div>
-                </div>
+    <main class="second-content">
+        <h1 class="page-title_2">公司愿景</h1>
+        <div class="second-box">
+            <div class="mid-intro-side">
+                <p>成为国内领先的农业综合服务提供商，助力乡村振兴，推动农业现代化发展。</p>
             </div>
         </div>
     </main>

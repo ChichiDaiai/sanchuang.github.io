@@ -35,38 +35,30 @@
 
         /* ========== Logo 区域（透明版） ========== */
         .header {
-            position: absolute;
-            top: 3px;
-            left: 200px;
-            width: auto;
-            height: auto;
-            background-color: transparent;
-            border-radius: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: none;
-            z-index: 10;
-        }
+    /* 删除 position: absolute; top: 3px; left: 200px; */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 10;
+    cursor: pointer;
+    margin-right: auto; /* 关键：这会把右边的导航项推到最右边 */
+}
 
         .logo {
-            width: 80px;
-            height: 80px;
-            background-image: url('logo.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
-        }
+    width: 60px; /* 稍微缩小一点适配导航栏高度 */
+    height: 60px;
+    background-image: url('logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
 
-        .logo-text {
-            color: #2c7d38;
-            font-size: 100px;
-            font-weight: 600;
-            letter-spacing: 2px;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        }
+.logo-text {
+    color: #2c7d38;
+    font-size: 24px; /* 减小字号，避免重叠 */
+    font-weight: 600;
+    letter-spacing: 2px;
+}
 
         /* 公司名称 */
         .company-name {
@@ -91,25 +83,25 @@
 
         /* ========== 顶部导航栏（透明版） ========== */
         .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: transparent;
-            box-shadow: none;
-            z-index: 100;
-            padding: 30px 0;
-        }
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.05); /* 极淡的底色 */
+    backdrop-filter: blur(10px); /* 磨砂玻璃效果 */
+    z-index: 100;
+    padding: 10px 0; /* 减小内边距，让导航栏变窄更精致 */
+}
 
         .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            gap: 20px;
-            padding: 0 30px;
-        }
+    max-width: 1400px; /* 调大最大宽度，给两端留出空间 */
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-end; /* 导航项依然靠右 */
+    align-items: center;
+    gap: 15px; /* 缩小间距，防止在小屏幕挤爆 */
+    padding: 0 40px; /* 左右留出安全边距 */
+}
 
         .nav-item {
             color: #ffffff;
@@ -479,39 +471,37 @@
 
     <!-- 顶部导航栏 -->
     <nav class="navbar">
-        <div class="nav-container">
-            <a class="nav-item" id="nav-home">首页</a>
+            <div class="nav-container">
+                <header class="header">
+            <div class="logo"></div>
+            <div class="logo-info">
+                <div class="logo-text">PLANTER</div>
+            </div>
+            </header>
+            <a href="index.html" class="nav-item">首页</a>
             <span class="nav-divider">|</span>
-            <a class="nav-item" id="nav-aboutPlanter">关于Planter</a>
+            <a class="nav-item" id="nav-aboutPlanter" href="guanyu.html">关于Planter</a>
             <span class="nav-divider">|</span>
+            
             <div class="nav-item-container">
-    <a class="nav-item" id="nav-tech">服务</a>
-    <ul class="dropdown-menu">
-        <li><a href="tudi_tuoguan.html" class="dropdown-item">土地托管服务</a></li>
-        <li><a href="pingtai_qudong.html" class="dropdown-item">平台驱动种植服务</a></li>
-    </ul>
-</div>
+                <a class="nav-item" >服务</a>
+                <ul class="dropdown-menu">
+                    <li><a href="tudi_tuoguan.html" class="dropdown-item">土地托管服务</a></li>
+                    <li><a href="pingtai_qudong.html" class="dropdown-item">平台驱动种植服务</a></li>
+                </ul>
+            </div>
+            
             <span class="nav-divider">|</span>
-            <a class="nav-item" id="nav-join">加入我们</a>
+            <a class="nav-item">加入我们</a>
             <span class="nav-divider">|</span>
-            <a class="nav-item" id="nav-contact">联系我们</a>
+            <a class="nav-item">联系我们</a>
             <span class="nav-divider">|</span>
-            <a class="nav-item" id="nav-register">免费注册</a>
+            <a class="nav-item">免费注册</a>
             <span class="nav-divider">|</span>
-            <a class="nav-item" id="nav-mobile">
-                <span class="nav-icon">📱</span>
-                <span>手机版</span>
-            </a>
+            <a class="nav-item">📱 手机版</a>
         </div>
     </nav>
 
-    <!-- Logo 区域 -->
-    <header class="header">
-    <div class="logo"></div>
-    <div class="logo-info">
-        <div class="logo-text">PLANTER</div>
-    </div>
-</header>
 
 <!-- 左侧标语 -->
 <div class="left-slogan">
