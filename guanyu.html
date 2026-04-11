@@ -11,7 +11,6 @@
         .background {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('images/images2.png');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -154,39 +153,64 @@
 
         /* 主体内容 */
         .main-content {
-            position: relative;
-            background-image: url('images/shouye_jieshao.jpg');
-            background-size: cover;
-            background-position: center;
-            margin-top: 100px;
-            padding-bottom: 80px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    position: relative;
+    background-image: url('images/shouye_jieshao.jpg');
+    background-size: cover;
+    background-position: center;
+    margin-top: 100px;
+    padding-bottom: 100px; /* 增加底部内边距 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+}
 
         /* 底部渐变 */
-        .main-content::after {
+        <!-- .main-content::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
             height: 80px;
-            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.9));
+
             pointer-events: none;
-        }
+        } -->
 
         .second-content {
-            background-image: url('images/kejixingnong (2).png');
-            background-size: cover;
-            background-position: center;
-            margin-top: 160px;
-            padding-bottom: 80px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    position: relative;
+    background-image: url('images/kejixingnong (2).png');
+    background-size: cover;
+    background-position: center top; /* 图片从顶部开始显示 */
+    
+    /* 1. 去掉 margin-top，改用负值移动或者直接拼接 */
+    margin-top: 0; 
+    
+    /* 2. 关键：设置最小高度，确保图片能显示出来 */
+    /* 如果你的图片比例比较长，可以调大这个值，比如 800px 或 900px */
+    min-height: 850px; 
+    
+    padding-top: 80px; /* 给标题留出空间 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    /* 3. 增加一个顶部的内阴影或渐变，让过渡更自然 */
+    box-shadow: inset 0 100px 80px -50px rgba(0,0,0,0.3);
+}
+        .second-content::before {
+    content: "";
+    position: absolute;
+    top: -50px; /* 向上延伸一点 */
+    left: 0;
+    width: 100%;
+    height: 150px;
+    /* 这是一个从透明到图片背景色的渐变，或者简单的黑/白渐变 */
+    background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(0,0,0,0.1));
+    pointer-events: none;
+    z-index: 2;
+}
+
 
         .page-title {
             color: #fff;
@@ -200,15 +224,16 @@
         }
 
         .page-title_2 {
-            color: #ffffff;
-            font-size: 42px;
-            text-shadow: 0 4px 12px rgba(0,0,0,0.5);
-            margin-top: 0px;
-            margin-bottom: 40px;
-            border-bottom: 4px solid #2c7d38;
-            padding-bottom: 10px;
-            text-align: center;
-        }
+    color: #ffffff;
+    font-size: 42px;
+    text-shadow: 0 4px 12px rgba(0,0,0,0.8); /* 加深阴影确保在复杂背景上清晰 */
+    margin-top: 50px; /* 调整与上一部分的间距 */
+    margin-bottom: 40px;
+    border-bottom: 4px solid #2c7d38;
+    padding-bottom: 10px;
+    text-align: center;
+    z-index: 5; /* 确保标题在遮罩上方 */
+}
 
         .giant-box {
             width: min(1400px, 96vw);
@@ -354,7 +379,7 @@
         <h1 class="page-title_2">公司愿景</h1>
         <div class="second-box">
             <div class="mid-intro-side">
-                <p>成为国内领先的农业综合服务提供商，助力乡村振兴，推动农业现代化发展。</p>
+                <p></p>
             </div>
         </div>
     </main>
